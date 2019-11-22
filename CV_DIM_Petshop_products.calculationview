@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CV_DIM_Petshop_products" applyPrivilegeType="NONE" checkAnalyticPrivileges="false" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection">
+  <descriptions defaultDescription="CV_DIM_Petshop_products"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="training.vhrakholskaya::petshop.Products" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="VHRAKHOLSKAYA" columnObjectName="training.vhrakholskaya::petshop.Products"/>
+    </DataSource>
+    <DataSource id="training.vhrakholskaya::petshop.TypeProducts" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="VHRAKHOLSKAYA" columnObjectName="training.vhrakholskaya::petshop.TypeProducts"/>
+    </DataSource>
+    <DataSource id="training.vhrakholskaya::petshop.Materials" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="VHRAKHOLSKAYA" columnObjectName="training.vhrakholskaya::petshop.Materials"/>
+    </DataSource>
+    <DataSource id="training.vhrakholskaya::petshop.Brands" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="VHRAKHOLSKAYA" columnObjectName="training.vhrakholskaya::petshop.Brands"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Products">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="TYPE_ID"/>
+        <viewAttribute id="PRODUCTS"/>
+        <viewAttribute id="PRICE"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="MATERIAL_ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#training.vhrakholskaya::petshop.Products">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE_ID" source="TYPE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTS" source="PRODUCTS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRICE" source="PRICE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL_ID" source="MATERIAL_ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Types">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#training.vhrakholskaya::petshop.TypeProducts">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_2" cardinality="CN_1" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="TYPE_ID"/>
+        <viewAttribute id="PRODUCTS"/>
+        <viewAttribute id="PRICE"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="MATERIAL_ID"/>
+        <viewAttribute id="ID_1"/>
+        <viewAttribute id="TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Products">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE_ID" source="TYPE_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTS" source="PRODUCTS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRICE" source="PRICE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL_ID" source="MATERIAL_ID"/>
+      </input>
+      <input node="#Types">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_1" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE_ID" source="ID"/>
+      </input>
+      <joinAttribute name="TYPE_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Products2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="PRODUCTS"/>
+        <viewAttribute id="PRICE"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="MATERIAL_ID"/>
+        <viewAttribute id="TYPE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTS" source="PRODUCTS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRICE" source="PRICE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL_ID" source="MATERIAL_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Materials">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="MATERIAL"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#training.vhrakholskaya::petshop.Materials">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="PRODUCTS"/>
+        <viewAttribute id="PRICE"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="MATERIAL_ID"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="MATERIAL"/>
+        <viewAttribute id="ID_1"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Products2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTS" source="PRODUCTS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRICE" source="PRICE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL_ID" source="MATERIAL_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+      </input>
+      <input node="#Materials">
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_1" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL_ID" source="ID"/>
+      </input>
+      <joinAttribute name="MATERIAL_ID"/>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Products3">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="PRODUCTS"/>
+        <viewAttribute id="PRICE"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="MATERIAL"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Join_1">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTS" source="PRODUCTS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRICE" source="PRICE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_2">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="BRAND"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#training.vhrakholskaya::petshop.Brands">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND" source="BRAND"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_3" cardinality="CN_1" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="PRODUCTS"/>
+        <viewAttribute id="PRICE"/>
+        <viewAttribute id="BRAND_ID"/>
+        <viewAttribute id="TYPE"/>
+        <viewAttribute id="MATERIAL"/>
+        <viewAttribute id="ID_1"/>
+        <viewAttribute id="BRAND"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Products3">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCTS" source="PRODUCTS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRICE" source="PRICE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="BRAND_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="TYPE" source="TYPE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MATERIAL" source="MATERIAL"/>
+      </input>
+      <input node="#Projection_2">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID_1" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND" source="BRAND"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="BRAND_ID" source="ID"/>
+      </input>
+      <joinAttribute name="BRAND_ID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_3">
+    <descriptions/>
+    <attributes>
+      <attribute id="ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Join_3" columnName="ID"/>
+      </attribute>
+      <attribute id="PRODUCTS" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PRODUCTS"/>
+        <keyMapping columnObjectName="Join_3" columnName="PRODUCTS"/>
+      </attribute>
+      <attribute id="TYPE" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="TYPE"/>
+        <keyMapping columnObjectName="Join_3" columnName="TYPE"/>
+      </attribute>
+      <attribute id="PRICE" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PRICE"/>
+        <keyMapping columnObjectName="Join_3" columnName="PRICE"/>
+      </attribute>
+      <attribute id="MATERIAL" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MATERIAL"/>
+        <keyMapping columnObjectName="Join_3" columnName="MATERIAL"/>
+      </attribute>
+      <attribute id="BRAND" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="BRAND"/>
+        <keyMapping columnObjectName="Join_3" columnName="BRAND"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="0" y="330"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Products2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="0" y="433"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Materials" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="179" y="433"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="0" y="500"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Products" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="0" y="590"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Types" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="178" y="590"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="60" y="170"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Products3" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="-10" y="256"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_2" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="170" y="255"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

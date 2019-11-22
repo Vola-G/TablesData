@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CV_CUBE_Petshop_Sales" applyPrivilegeType="NONE" checkAnalyticPrivileges="false" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="reportingEnabled" calculationScenarioType="TREE_BASED" dataCategory="CUBE" enforceSqlExecution="false" executionSemantic="UNDEFINED">
+  <descriptions defaultDescription="CV_CUBE_Petshop_Sales"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="training.vhrakholskaya::petshop.Sales" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="VHRAKHOLSKAYA" columnObjectName="training.vhrakholskaya::petshop.Sales"/>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="YEAR"/>
+        <viewAttribute id="MONTH"/>
+        <viewAttribute id="DAY"/>
+        <viewAttribute id="PRODUCT_ID"/>
+        <viewAttribute id="SHOP_ID"/>
+        <viewAttribute id="AMOUNT"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#training.vhrakholskaya::petshop.Sales">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="YEAR" source="YEAR"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="MONTH" source="MONTH"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="DAY" source="DAY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="PRODUCT_ID" source="PRODUCT_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="SHOP_ID" source="SHOP_ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="AMOUNT" source="AMOUNT"/>
+      </input>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Projection_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="ID_1" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Projection_1" columnName="ID"/>
+      </attribute>
+      <attribute id="YEAR" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="YEAR"/>
+        <keyMapping columnObjectName="Projection_1" columnName="YEAR"/>
+      </attribute>
+      <attribute id="MONTH" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="MONTH"/>
+        <keyMapping columnObjectName="Projection_1" columnName="MONTH"/>
+      </attribute>
+      <attribute id="DAY" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="DAY"/>
+        <keyMapping columnObjectName="Projection_1" columnName="DAY"/>
+      </attribute>
+      <attribute id="SHOP_ID" hidden="true" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SHOP_ID"/>
+        <keyMapping columnObjectName="Projection_1" columnName="SHOP_ID"/>
+      </attribute>
+      <attribute id="SHOP_ID$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Projection_1" columnName="SHOP_ID"/>
+      </attribute>
+      <attribute id="PRODUCT_ID$local">
+        <descriptions/>
+        <keyMapping columnObjectName="Projection_1" columnName="PRODUCT_ID"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures>
+      <measure id="AMOUNT" order="5" aggregationType="sum" measureType="simple">
+        <descriptions defaultDescription="AMOUNT"/>
+        <measureMapping columnObjectName="Projection_1" columnName="AMOUNT"/>
+      </measure>
+    </baseMeasures>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+    <sharedDimensions>
+      <logicalJoin associatedObjectUri="/training.vhrakholskaya/calculationviews/CV_DIM_Petshop_shops">
+        <attributes>
+          <attributeRef>#SHOP_ID$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>ID</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="leftOuter"/>
+        <associatedAttributeFeatures>
+          <attributeReference attributeName="CITY" hidden="true"/>
+          <attributeReference attributeName="ZIP" hidden="true"/>
+          <attributeReference attributeName="ADDRESS" hidden="true"/>
+          <attributeReference attributeName="PHONE" hidden="true"/>
+          <attributeReference attributeName="ID" hidden="true"/>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+      <logicalJoin associatedObjectUri="/training.vhrakholskaya/calculationviews/CV_DIM_Petshop_products">
+        <attributes>
+          <attributeRef>#PRODUCT_ID$local</attributeRef>
+        </attributes>
+        <associatedAttributeNames>
+          <attributeName>ID</attributeName>
+        </associatedAttributeNames>
+        <properties cardinality="CN_1" joinOperator="Equal" joinType="leftOuter"/>
+        <associatedAttributeFeatures>
+          <attributeReference alias="CV_DIM_Petshop_products_ID" attributeName="ID" hidden="true"/>
+          <attributeReference attributeName="MATERIAL" hidden="true"/>
+          <attributeReference attributeName="BRAND" hidden="true"/>
+        </associatedAttributeFeatures>
+      </logicalJoin>
+    </sharedDimensions>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="240"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape modelObjectName="Projection_1" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+        <upperLeftCorner x="527" y="16"/>
+      </shape>
+      <shape modelObjectName="/training.vhrakholskaya/calculationviews/CV_DIM_Petshop_shops" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="16" y="16"/>
+      </shape>
+      <shape modelObjectName="/training.vhrakholskaya/calculationviews/CV_DIM_Petshop_products" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+        <upperLeftCorner x="901" y="16"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>

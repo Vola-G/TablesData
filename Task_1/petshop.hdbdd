@@ -1,0 +1,67 @@
+namespace training.vhrakholskaya.Task_1;
+
+@Schema: 'VHRAKHOLSKAYA'
+context petshop {
+
+	@Catalog.tableType: #COLUMN
+	@Catalog.index : [ { name : 'MYINDEX1', unique : true, order : #DESC, elementNames : ['ID'] } ]
+	entity Products {
+		key ID : Integer not null;
+		key TYPE_ID : Integer;
+		PRODUCTS : String(100);
+		PRICE : BinaryFloat;
+		BRAND_ID : Integer;
+		MATERIAL_ID : Integer;
+	};
+	
+	entity TypeProducts {
+		key ID : Integer not null;
+		TYPE : String(100);
+	};
+	
+	entity Materials {
+		key ID : Integer not null;
+		MATERIAL : String(100);
+	};
+	
+	entity Brands {
+		key ID : Integer not null;
+		BRAND : String(100);
+	};
+	
+	entity Shops {
+		key ID : Integer not null;
+		STOP_NAME : String(100);
+		ADDRESS_CODE : Integer;
+	};
+	
+	entity Address {
+		key ID : Integer not null;
+		ADDRESS : String(100);
+		CITY_ID : Integer;
+		ZIP : String(100);
+		PHONE : String(100);
+	};
+	
+	entity Cities {
+		key ID : Integer not null;
+		COUNTRY_ID : Integer;
+		CITY : String(100);
+	};
+	
+	entity Countries {
+		key ID : Integer not null;
+		COUNTRY : String(100);
+	};
+	
+	entity Sales {
+		key ID : Integer;
+		YEAR : Integer;
+		MONTH : Integer;
+		DAY : Integer;
+		PRODUCT_ID : Integer;
+		SHOP_ID : Integer;
+		AMOUNT : Integer;
+	};
+	
+};

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" schemaVersion="2.3" id="CV_DIM_Petshop_shops" applyPrivilegeType="NONE" checkAnalyticPrivileges="false" defaultClient="$$client$$" defaultLanguage="$$language$$" hierarchiesSQLEnabled="false" translationRelevant="true" visibility="internal" calculationScenarioType="TREE_BASED" dataCategory="DIMENSION" enforceSqlExecution="false" executionSemantic="UNDEFINED" outputViewType="Projection">
+  <descriptions defaultDescription="CV_DIM_Petshop_shops"/>
+  <localVariables/>
+  <variableMappings/>
+  <informationModelLayout relativeWidthScenario="27"/>
+  <dataSources>
+    <DataSource id="training.vhrakholskaya::petshop.Shops" type="DATA_BASE_TABLE">
+      <viewAttributes allViewAttributes="true"/>
+      <columnObject schemaName="VHRAKHOLSKAYA" columnObjectName="training.vhrakholskaya::petshop.Shops"/>
+    </DataSource>
+    <DataSource id="CV_DIM_Petshop_address" type="CALCULATION_VIEW">
+      <viewAttributes allViewAttributes="true"/>
+      <resourceUri>/training.vhrakholskaya/calculationviews/CV_DIM_Petshop_address</resourceUri>
+    </DataSource>
+  </dataSources>
+  <calculationViews>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Shops">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="STOP_NAME"/>
+        <viewAttribute id="ADDRESS_CODE"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#training.vhrakholskaya::petshop.Shops">
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="STOP_NAME" source="STOP_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ADDRESS_CODE" source="ADDRESS_CODE"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:ProjectionView" id="Addresses">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="PHONE"/>
+        <viewAttribute id="ZIP"/>
+        <viewAttribute id="ADDRESS"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#CV_DIM_Petshop_address">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE" source="PHONE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ZIP" source="ZIP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ADDRESS" source="ADDRESS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+      </input>
+    </calculationView>
+    <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="C1_1" joinOrder="OUTSIDE_IN" joinType="leftOuter">
+      <descriptions/>
+      <viewAttributes>
+        <viewAttribute id="ID"/>
+        <viewAttribute id="STOP_NAME"/>
+        <viewAttribute id="COUNTRY"/>
+        <viewAttribute id="CITY"/>
+        <viewAttribute id="ZIP"/>
+        <viewAttribute id="ADDRESS"/>
+        <viewAttribute id="PHONE"/>
+        <viewAttribute hidden="true" id="JOIN$ADDRESS_CODE$ID"/>
+      </viewAttributes>
+      <calculatedViewAttributes/>
+      <input node="#Shops">
+        <mapping xsi:type="Calculation:AttributeMapping" target="STOP_NAME" source="STOP_NAME"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ID" source="ID"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ADDRESS_CODE$ID" source="ADDRESS_CODE"/>
+      </input>
+      <input node="#Addresses">
+        <mapping xsi:type="Calculation:AttributeMapping" target="PHONE" source="PHONE"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ZIP" source="ZIP"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="ADDRESS" source="ADDRESS"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="CITY" source="CITY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="COUNTRY" source="COUNTRY"/>
+        <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$ADDRESS_CODE$ID" source="ID"/>
+      </input>
+      <joinAttribute name="JOIN$ADDRESS_CODE$ID"/>
+    </calculationView>
+  </calculationViews>
+  <logicalModel id="Join_1">
+    <descriptions/>
+    <attributes>
+      <attribute id="ID" order="1" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ID"/>
+        <keyMapping columnObjectName="Join_1" columnName="ID"/>
+      </attribute>
+      <attribute id="SHOP_NAME" order="2" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="SHOP_NAME"/>
+        <keyMapping columnObjectName="Join_1" columnName="STOP_NAME"/>
+      </attribute>
+      <attribute id="COUNTRY" order="3" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="COUNTRY"/>
+        <keyMapping columnObjectName="Join_1" columnName="COUNTRY"/>
+      </attribute>
+      <attribute id="CITY" order="4" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="CITY"/>
+        <keyMapping columnObjectName="Join_1" columnName="CITY"/>
+      </attribute>
+      <attribute id="ZIP" order="5" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ZIP"/>
+        <keyMapping columnObjectName="Join_1" columnName="ZIP"/>
+      </attribute>
+      <attribute id="ADDRESS" order="6" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="ADDRESS"/>
+        <keyMapping columnObjectName="Join_1" columnName="ADDRESS"/>
+      </attribute>
+      <attribute id="PHONE" order="7" attributeHierarchyActive="false" displayAttribute="false">
+        <descriptions defaultDescription="PHONE"/>
+        <keyMapping columnObjectName="Join_1" columnName="PHONE"/>
+      </attribute>
+    </attributes>
+    <calculatedAttributes/>
+    <privateDataFoundation>
+      <tableProxies/>
+      <joins/>
+      <layout>
+        <shapes/>
+      </layout>
+    </privateDataFoundation>
+    <baseMeasures/>
+    <calculatedMeasures/>
+    <restrictedMeasures/>
+    <localDimensions/>
+  </logicalModel>
+  <layout>
+    <shapes>
+      <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+        <upperLeftCorner x="40" y="85"/>
+        <rectangleSize height="0" width="0"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="40" y="180"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Shops" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="10" y="280"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+      <shape expanded="true" modelObjectName="Addresses" modelObjectNameSpace="CalculationView">
+        <upperLeftCorner x="160" y="280"/>
+        <rectangleSize height="-1" width="-1"/>
+      </shape>
+    </shapes>
+  </layout>
+</Calculation:scenario>
